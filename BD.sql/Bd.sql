@@ -288,22 +288,8 @@ CREATE TABLE Asignacion (
     FOREIGN KEY (id_estudiante) REFERENCES Estudiantes(id_estudiante),
     UNIQUE(id_evaluacion, id_estudiante) -- Un estudiante no puede tener más de una asignación por evaluación
 );
--- Grupo A: 4 estudiantes con 3 exámenes cada uno (12 registros)
-INSERT INTO Asignacion VALUES 
-(1, 1, 1), (2, 2, 1), (3, 3, 1),        -- Estudiante 1
-(4, 1, 2), (5, 4, 2), (6, 5, 2),        -- Estudiante 2
-(7, 2, 3), (8, 3, 3), (9, 4, 3),        -- Estudiante 3
-(10, 1, 4), (11, 2, 4), (12, 5, 4);     -- Estudiante 4
+-
 
--- Grupo B: 3 estudiantes con 2 exámenes cada uno (6 registros)
-INSERT INTO Asignacion VALUES 
-(13, 3, 5), (14, 4, 5),                -- Estudiante 5
-(15, 2, 6), (16, 5, 6),                -- Estudiante 6
-(17, 1, 7), (18, 3, 7);                -- Estudiante 7
-
--- Grupo C: estudiantes 8, 9, 10 → no tienen asignaciones
-
--- Tabla de intentos (registro de exámenes realizados)
 CREATE TABLE Intento (
     id_intento 			INT PRIMARY KEY,
     fecha_inicio 		DATETIME NOT NULL,
@@ -312,36 +298,6 @@ CREATE TABLE Intento (
     id_asignacion 		INT UNIQUE, -- Solo un intento por asignación
     FOREIGN KEY (id_asignacion) REFERENCES Asignacion(id_asignacion)
 );
--- Intentos para asignaciones del grupo A (estudiantes 1 al 4)
-INSERT INTO Intento VALUES
-(1, '2025-05-25 08:00:00', '2025-05-25 08:30:00', 15.00, 1),   -- Est. 1, Eval 1 → aprobado
-(2, '2025-05-25 08:35:00', '2025-05-25 09:05:00', 10.50, 2),   -- Est. 1, Eval 2 → desaprobado
-(3, '2025-05-25 09:10:00', '2025-05-25 09:40:00', 13.00, 3),   -- Est. 1, Eval 3 → aprobado
-
-(4, '2025-05-25 10:00:00', '2025-05-25 10:30:00', 12.00, 4),   -- Est. 2, Eval 1
-(5, '2025-05-25 10:35:00', '2025-05-25 11:05:00', 17.00, 5),   -- Est. 2, Eval 4
-(6, '2025-05-25 11:10:00', '2025-05-25 11:40:00', 09.50, 6),   -- Est. 2, Eval 5 → desaprobado
-
-(7, '2025-05-26 08:00:00', '2025-05-26 08:30:00', 16.00, 7),   -- Est. 3, Eval 2
-(8, '2025-05-26 08:35:00', '2025-05-26 09:05:00', 18.00, 8),   -- Est. 3, Eval 3
-(9, '2025-05-26 09:10:00', '2025-05-26 09:40:00', 07.50, 9),   -- Est. 3, Eval 4 → desaprobado
-
-(10, '2025-05-26 10:00:00', '2025-05-26 10:30:00', 11.00, 10), -- Est. 4, Eval 1
-(11, '2025-05-26 10:35:00', '2025-05-26 11:05:00', 14.00, 11), -- Est. 4, Eval 2
-(12, '2025-05-26 11:10:00', '2025-05-26 11:40:00', 12.50, 12); -- Est. 4, Eval 5
-
--- Intentos para asignaciones del grupo B (estudiantes 5 al 7)
-INSERT INTO Intento VALUES
-(13, '2025-05-27 08:00:00', '2025-05-27 08:30:00', 08.00, 13), -- Est. 5, Eval 3 → desaprobado
-(14, '2025-05-27 08:35:00', '2025-05-27 09:05:00', 11.50, 14), -- Est. 5, Eval 4
-
-(15, '2025-05-27 09:10:00', '2025-05-27 09:40:00', 19.00, 15), -- Est. 6, Eval 2
-(16, '2025-05-27 10:00:00', '2025-05-27 10:30:00', 10.00, 16), -- Est. 6, Eval 5 → desaprobado
-
-(17, '2025-05-27 10:35:00', '2025-05-27 11:05:00', 13.00, 17), -- Est. 7, Eval 1
-(18, '2025-05-27 11:10:00', '2025-05-27 11:40:00', 07.00, 18); -- Est. 7, Eval 3 → desaprobado
-
-
 -- Tabla de respuestas
 CREATE TABLE Respuesta (
     id_respuesta 		INT PRIMARY KEY,
@@ -359,9 +315,6 @@ INSERT INTO Respuesta (id_intento, id_pregunta, id_alternativa) VALUES (1, 3, 10
 INSERT INTO Respuesta (id_intento, id_pregunta, id_alternativa) VALUES (1, 4, 15);
 INSERT INTO Respuesta (id_intento, id_pregunta, id_alternativa) VALUES (1, 5, 18);
 
-SELECT COUNT(DISTINCT id_estudiante) AS alumnos_desaprobados
-FROM Intento
-WHERE estado = 'Desaprobado';
 
 
 
