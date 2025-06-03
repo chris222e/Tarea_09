@@ -309,12 +309,6 @@ CREATE TABLE Respuesta (
     FOREIGN KEY (id_alternativa) REFERENCES Alternativa(id_alternativa)
 );
 
-INSERT INTO Respuesta (id_intento, id_pregunta, id_alternativa) VALUES (1, 1, 2);
-INSERT INTO Respuesta (id_intento, id_pregunta, id_alternativa) VALUES (1, 2, 5);
-INSERT INTO Respuesta (id_intento, id_pregunta, id_alternativa) VALUES (1, 3, 10);
-INSERT INTO Respuesta (id_intento, id_pregunta, id_alternativa) VALUES (1, 4, 15);
-INSERT INTO Respuesta (id_intento, id_pregunta, id_alternativa) VALUES (1, 5, 18);
-
 
 
 
